@@ -1,0 +1,12 @@
+tipos de barcos:
+
+aircraftCarrier: *****
+batlleship:      ****
+cruiser:         ***
+destroyer:       **
+submarine:       *
+
+
+CMake
+
+tratar do print de mapas com mais de 10 de tamanho
