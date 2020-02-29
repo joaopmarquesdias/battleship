@@ -1,12 +1,13 @@
-tipos de barcos:
-
-aircraftCarrier: *****
-batlleship:      ****
-cruiser:         ***
-destroyer:       **
-submarine:       *
-
-
 CMake
 
 tratar do print de mapas com mais de 10 de tamanho
+falta criar o tamanho manual
+
+
+tipos de barcos:
+
+int submarine = 1;        //*
+int destroyer = 2;        //**
+int cruiser = 3;          //***
+int batlleship = 4;       //****
+int aircraftCarrier = 5;  //*****

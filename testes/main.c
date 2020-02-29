@@ -5,7 +5,8 @@
 int main() {
   srand(time(0));
   int i = rand();
-  printf("%i\n", i%10+10);
+  int j = rand();
+  printf("%i %i\n", i, j);
 
   return 0;
 }
