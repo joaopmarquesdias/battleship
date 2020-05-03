@@ -1,13 +1,21 @@
 CMake
 
-tratar do print de mapas com mais de 10 de tamanho
-falta criar o tamanho manual
 
+adicionar o print dos tipos dos barcos no setupGame onde tá
+a sinalização do AQUI AQUI AQUI AQUI
+VER O ADDBOAT POR CAUSA DOS POINTERS!
 
 tipos de barcos:
 
-int submarine = 1;        //*
-int destroyer = 2;        //**
-int cruiser = 3;          //***
-int batlleship = 4;       //****
-int aircraftCarrier = 5;  //*****
+cruiser = 1 //AAA
+battleship = 2 //BBBB
+aircraftCarrier = 3 //CCCCC  D
+bomber = 4        E     //DDDD
+destroyer = 5 // EEE
+                  E
+
+state pode ser:
+' ' - nothing
+'#' - boat
+'X' - boat shot
+'0' - missed shot

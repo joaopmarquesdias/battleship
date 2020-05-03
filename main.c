@@ -6,87 +6,89 @@
 
 #include "utils.h"
 
-#define Name(name)  #name
+
 
 int main(int argc, char const *argv[]) {
-
-  //obter opção manual ou random
-  //opt a 1 -> manual, 2 -> random, default -> random
-  int opt = getopt(argc, argv);
   srand(time(0));
-  //int tamanho = rand()%10+10;
 
-  //criar players
-  player* player1 = new_player(10);
-  player* player2 = new_player(10);
+  system("clear");
 
-  //prints teste
-  //printmap(player1->MAP, player1->tamanho);
-  //printf("\n");
-  //printmap(player2->MAP, player2->tamanho);
+  //criar jogo
+  game_t* game = initGame();
 
-  //numero de barcos a colocar em cada mapa no caso de ser random
-  int rbarcos = rand()%10+7;
-  //colocar os barcos nos mapas
-  player1 = definemap(player1, opt, rbarcos);
-  player2 = definemap(player2, opt, rbarcos);
+  //colocar barcos nos mapas
+  game = setupGame(game);
+
   system("clear");
 
   //ciclo de jogo
   int rodada = 0;
-  while((player1->HP > 0) && (player2->HP > 0)) {
-    char wtv;
+  while((game->player1->HP > 0) && (game->player2->HP > 0)) {
     rodada++;
     //iniciar ronda
     {
-      printf("Pressione enter para começar a rodada numero %i\n",rodada);
-      scanf("%c", &wtv);
+      printf("Pressione enter para começar a rodada número %i\n",rodada);
+      while(getchar() != '\n');
+
       system("clear");
     }
     //vez do player1
     {
-      printf("%s é a sua vez.\n", Name(player1));
+      printf("Player 1 é a sua vez.\n");
       printf("Pressione Enter quando estiver pronto");
-      scanf("%c", &wtv);
-      while(wtv != '\n') {
-        printf("Pressione Enter quando estiver pronto");
-        scanf("%c", &wtv);
-      }
-      player2 = shoot(player1, player2);
+      while(getchar() != '\n');
+      //print dos mapas
+      printf("O seu mapa:\n");
+      printMap(game->player1, 1);
+      printf("O mapa inimigo:\n");
+      printMap(game->player2, 2);
+
+      game->player2 = shoot(game->player2);
       printf("Pressione enter para acabar a jogada");
-      scanf("%c", &wtv);
+      while(getchar() != '\n');
       system("clear");
     }
     //vez do player2
     {
-      printf("%s é a sua vez.\n", Name(player2));
+      printf("Player 2 é a sua vez\n");
       printf("Pressione Enter quando estiver pronto");
-      scanf("%c", &wtv);
-      while(wtv != '\n') {
-        printf("Pressione Enter quando estiver pronto");
-        scanf("%c", &wtv);
-      }
-      player1 = shoot(player2, player1);
+      while(getchar() != '\n');
+      //print dos mapas
+      printf("O seu mapa:\n");
+      printMap(game->player2, 1);
+      printf("O mapa inimigo:\n");
+      printMap(game->player1, 2);
+
+      game->player1 = shoot(game->player1);
       printf("Pressione enter para acabar a jogada");
-      scanf("%c", &wtv);
+      while(getchar() != '\n');
       system("clear");
     }
     //printar estado de jogo
     {
       printf("Mapa do player 1:\n");
-      printmapenemy(player1->MAP, player1->tamanho);
+      printMap(game->player1, 2);
       printf("Mapa do player 2:\n");
-      printmapenemy(player2->MAP, player2->tamanho);
+      printMap(game->player2, 2);
     }
   }
 
   //acabar o jogo e printar o vencedor
-  if(player1->HP > 0) {
-    printf("Ganhou o player 1!\nParabéns!\n");
+  if(game->player1->HP == 0 && game->player2->HP == 0) {
+    printf("Foi um empate!");
   }
-  if(player2->HP > 0) {
-    printf("Ganhou o player 2!\nParabéns!\n");
+  else {
+    if(game->player1->HP > 0) {
+      printf("Ganhou o player 1!\nParabéns!\n");
+    }
+    if(game->player2->HP > 0) {
+      printf("Ganhou o player 2!\nParabéns!\n");
+    }
   }
   printf("O jogo teve um total de %i rodadas\n", rodada);
+
+  //libertar a memória do jogo
+  freeGame(game);
+
   return 0;
 }
